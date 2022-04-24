@@ -1,15 +1,16 @@
 import fs = require("fs")
-import { dateStringToDate } from "./utils" 
 import { MatchResult } from "./MatchResult"
 
 type MatchData = [Date, string, string, number, number, MatchResult, string]
 
-export class CSVFileReader {
-    data: MatchData[] = []
+export abstract class CSVFileReader<T> {
+    data: T[] = []
 
     // create a filename object,
     // to use different csv files
     constructor(public filename: string) { }
+
+    abstract mapRow(row: string[]): T 
 
     read(): void {
         // Changing the CSV file to array of strings
@@ -20,15 +21,12 @@ export class CSVFileReader {
         })
         .map(this.mapRow)
     }
-    mapRow(row: string[]): MatchData {
-        return [
-            dateStringToDate(row[0]),
-            row[1],
-            row[2],
-            parseInt(row[3]),
-            parseInt(row[4]),
-            row[5] as MatchResult,
-            row[6]
-        ]
-    }
 }
+
+// abstract classes - classes that we are never going to use to create an instance of an object 
+
+/* 
+Generics 
+    Like function arguments, but for types in class/function definitions.
+    Allows us to define the type of a property/argument value at a future point 
+*/
