@@ -11,5 +11,3 @@ const matchReader = new MatchReader(csvFileReader)
 matchReader.load()
 
 
-
-console.log(`Man United won ${manUnitedWins} games`)
